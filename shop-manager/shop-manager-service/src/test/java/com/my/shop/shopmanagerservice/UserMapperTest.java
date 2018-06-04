@@ -1,7 +1,10 @@
 package com.my.shop.shopmanagerservice;
 
+import com.shop.mapper.TbUserMapper;
+import com.shop.pojo.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -12,5 +15,13 @@ import java.util.List;
 @SpringBootTest
 public class UserMapperTest {
 
+    @Autowired
+    private TbUserMapper userMapper;
+
+    @Test
+    public void testUser(){
+        User user = userMapper.getUserByName("tidy");
+        System.out.println(user.getPassword());
+    }
 
 }

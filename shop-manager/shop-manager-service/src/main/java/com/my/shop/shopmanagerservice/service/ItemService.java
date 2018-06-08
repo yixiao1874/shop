@@ -9,6 +9,7 @@ import com.shop.pojo.TbItem;
 import com.shop.pojo.TbItemDesc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
@@ -21,7 +22,7 @@ public class ItemService {
     @Autowired
     private ItemDescMapper itemDescMapper;
 
-    public TaotaoResult addItem(@RequestParam("item")TbItem item, @RequestParam("desc")String desc) {
+    public TaotaoResult addItem(@RequestBody TbItem item, @RequestParam("desc")String desc) {
         //生成商品id
         final long itemId = IDUtils.genItemId();
         //补全item的属性

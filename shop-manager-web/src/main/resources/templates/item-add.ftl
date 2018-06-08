@@ -86,37 +86,40 @@
 		//同步文本框中的商品描述
 		itemAddEditor.sync();
 		//取商品的规格
-		/*
-		var paramJson = [];
-		$("#itemAddForm .params li").each(function(i,e){
-			var trs = $(e).find("tr");
-			var group = trs.eq(0).text();
-			var ps = [];
-			for(var i = 1;i<trs.length;i++){
-				var tr = trs.eq(i);
-				ps.push({
-					"k" : $.trim(tr.find("td").eq(0).find("span").text()),
-					"v" : $.trim(tr.find("input").val())
-				});
-			}
-			paramJson.push({
-				"group" : group,
-				"params": ps
-			});
-		});
-		//把json对象转换成字符串
-		paramJson = JSON.stringify(paramJson);
-		$("#itemAddForm [name=itemParams]").val(paramJson);
-		*/
-		//ajax的post方式提交表单
-		//$("#itemAddForm").serialize()将表单序列号为key-value形式的字符串
 		alert($("#itemAddForm").serialize());
-		$.post("/item/save",$("#itemAddForm").serialize(), function(data){
+		/*$.post("/item/save",$("#itemAddForm").serialize(), function(data){
 			if(data.status == 200){
 				$.messager.alert('提示','新增商品成功!');
 			}
-		});
+		});*/
+        $.ajax({
+            type: "POST",
+            url: '/item/save',
+            data:$("#itemAddForm").serializeArray(),
+            contentType : 'application/json',
+            success: function(data){
+                if(data.status == 200){
+                    $.messager.alert('提示','新增商品成功!');
+                }
+            }
+        });
 	}
+
+    $.fn.serializeObject = function() {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function() {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [ o[this.name] ];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
 	
 	function clearForm(){
 		$('#itemAddForm').form('reset');
